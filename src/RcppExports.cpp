@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // adaptive_mh_ang_vol
 Rcpp::List adaptive_mh_ang_vol(const arma::vec& angles, const arma::vec& sum_term, const arma::vec& sqrt_term, const int& dim, const double& starting_theta_ang, std::string ang_gauge_type, Rcpp::Nullable<double> prop_Sigma_angles_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDep_adaptive_mh_ang_vol(SEXP anglesSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_angSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
+RcppExport SEXP _gaugeDependence_adaptive_mh_ang_vol(SEXP anglesSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_angSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -39,7 +39,7 @@ END_RCPP
 }
 // adaptive_mh_rad_ang_vol
 Rcpp::List adaptive_mh_rad_ang_vol(const arma::vec& radii, const arma::vec& angles, const arma::vec& threshold, const arma::vec& sum_term, const arma::vec& sqrt_term, const int& dim, const arma::rowvec& starting_theta_rad, const double& starting_theta_ang, std::string rad_gauge_type, std::string ang_gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_radii_, Rcpp::Nullable<double> prop_Sigma_angles_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDep_adaptive_mh_rad_ang_vol(SEXP radiiSEXP, SEXP anglesSEXP, SEXP thresholdSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_radSEXP, SEXP starting_theta_angSEXP, SEXP rad_gauge_typeSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_radii_SEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
+RcppExport SEXP _gaugeDependence_adaptive_mh_rad_ang_vol(SEXP radiiSEXP, SEXP anglesSEXP, SEXP thresholdSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_radSEXP, SEXP starting_theta_angSEXP, SEXP rad_gauge_typeSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_radii_SEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -70,7 +70,7 @@ END_RCPP
 }
 // adaptive_mh
 Rcpp::List adaptive_mh(const arma::vec& radii, const arma::vec& angles, const arma::rowvec& starting_theta, std::string gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDep_adaptive_mh(SEXP radiiSEXP, SEXP anglesSEXP, SEXP starting_thetaSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
+RcppExport SEXP _gaugeDependence_adaptive_mh(SEXP radiiSEXP, SEXP anglesSEXP, SEXP starting_thetaSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -94,7 +94,7 @@ END_RCPP
 }
 // rcpparma_hello_world
 arma::mat rcpparma_hello_world();
-RcppExport SEXP _gaugeDep_rcpparma_hello_world() {
+RcppExport SEXP _gaugeDependence_rcpparma_hello_world() {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -104,7 +104,7 @@ END_RCPP
 }
 // rcpparma_outerproduct
 arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _gaugeDep_rcpparma_outerproduct(SEXP xSEXP) {
+RcppExport SEXP _gaugeDependence_rcpparma_outerproduct(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -115,7 +115,7 @@ END_RCPP
 }
 // rcpparma_innerproduct
 double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _gaugeDep_rcpparma_innerproduct(SEXP xSEXP) {
+RcppExport SEXP _gaugeDependence_rcpparma_innerproduct(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -126,7 +126,7 @@ END_RCPP
 }
 // rcpparma_bothproducts
 Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _gaugeDep_rcpparma_bothproducts(SEXP xSEXP) {
+RcppExport SEXP _gaugeDependence_rcpparma_bothproducts(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -135,31 +135,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rmultinom_1
-arma::vec rmultinom_1(const arma::vec& arma_probs);
-RcppExport SEXP _gaugeDep_rmultinom_1(SEXP arma_probsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type arma_probs(arma_probsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rmultinom_1(arma_probs));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_gaugeDep_adaptive_mh_ang_vol", (DL_FUNC) &_gaugeDep_adaptive_mh_ang_vol, 16},
-    {"_gaugeDep_adaptive_mh_rad_ang_vol", (DL_FUNC) &_gaugeDep_adaptive_mh_rad_ang_vol, 21},
-    {"_gaugeDep_adaptive_mh", (DL_FUNC) &_gaugeDep_adaptive_mh, 14},
-    {"_gaugeDep_rcpparma_hello_world", (DL_FUNC) &_gaugeDep_rcpparma_hello_world, 0},
-    {"_gaugeDep_rcpparma_outerproduct", (DL_FUNC) &_gaugeDep_rcpparma_outerproduct, 1},
-    {"_gaugeDep_rcpparma_innerproduct", (DL_FUNC) &_gaugeDep_rcpparma_innerproduct, 1},
-    {"_gaugeDep_rcpparma_bothproducts", (DL_FUNC) &_gaugeDep_rcpparma_bothproducts, 1},
-    {"_gaugeDep_rmultinom_1", (DL_FUNC) &_gaugeDep_rmultinom_1, 1},
+    {"_gaugeDependence_adaptive_mh_ang_vol", (DL_FUNC) &_gaugeDependence_adaptive_mh_ang_vol, 16},
+    {"_gaugeDependence_adaptive_mh_rad_ang_vol", (DL_FUNC) &_gaugeDependence_adaptive_mh_rad_ang_vol, 21},
+    {"_gaugeDependence_adaptive_mh", (DL_FUNC) &_gaugeDependence_adaptive_mh, 14},
+    {"_gaugeDependence_rcpparma_hello_world", (DL_FUNC) &_gaugeDependence_rcpparma_hello_world, 0},
+    {"_gaugeDependence_rcpparma_outerproduct", (DL_FUNC) &_gaugeDependence_rcpparma_outerproduct, 1},
+    {"_gaugeDependence_rcpparma_innerproduct", (DL_FUNC) &_gaugeDependence_rcpparma_innerproduct, 1},
+    {"_gaugeDependence_rcpparma_bothproducts", (DL_FUNC) &_gaugeDependence_rcpparma_bothproducts, 1},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_gaugeDep(DllInfo *dll) {
+RcppExport void R_init_gaugeDependence(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

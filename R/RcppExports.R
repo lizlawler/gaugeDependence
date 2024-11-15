@@ -2,34 +2,30 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 adaptive_mh_ang_vol <- function(angles, sum_term, sqrt_term, dim, starting_theta_ang, ang_gauge_type, prop_Sigma_angles_ = NULL, n_updates = 10000L, update_freq = 100L, n_burnin = 0L, n_thin = 1L, adapt_cov = FALSE, r_opt = 0.234, c0 = 10, c1 = 0.8, K = 10L) {
-    .Call(`_gaugeDep_adaptive_mh_ang_vol`, angles, sum_term, sqrt_term, dim, starting_theta_ang, ang_gauge_type, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
+    .Call(`_gaugeDependence_adaptive_mh_ang_vol`, angles, sum_term, sqrt_term, dim, starting_theta_ang, ang_gauge_type, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
 }
 
 adaptive_mh_rad_ang_vol <- function(radii, angles, threshold, sum_term, sqrt_term, dim, starting_theta_rad, starting_theta_ang, rad_gauge_type, ang_gauge_type, prop_Sigma_radii_ = NULL, prop_Sigma_angles_ = NULL, n_updates = 10000L, update_freq = 100L, n_burnin = 0L, n_thin = 1L, adapt_cov = FALSE, r_opt = 0.234, c0 = 10, c1 = 0.8, K = 10L) {
-    .Call(`_gaugeDep_adaptive_mh_rad_ang_vol`, radii, angles, threshold, sum_term, sqrt_term, dim, starting_theta_rad, starting_theta_ang, rad_gauge_type, ang_gauge_type, prop_Sigma_radii_, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
+    .Call(`_gaugeDependence_adaptive_mh_rad_ang_vol`, radii, angles, threshold, sum_term, sqrt_term, dim, starting_theta_rad, starting_theta_ang, rad_gauge_type, ang_gauge_type, prop_Sigma_radii_, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
 }
 
 adaptive_mh <- function(radii, angles, starting_theta, gauge_type, prop_Sigma_ = NULL, n_updates = 10000L, update_freq = 100L, n_burnin = 0L, n_thin = 1L, adapt_cov = FALSE, r_opt = 0.234, c0 = 10, c1 = 0.8, K = 10L) {
-    .Call(`_gaugeDep_adaptive_mh`, radii, angles, starting_theta, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
+    .Call(`_gaugeDependence_adaptive_mh`, radii, angles, starting_theta, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
 }
 
 rcpparma_hello_world <- function() {
-    .Call(`_gaugeDep_rcpparma_hello_world`)
+    .Call(`_gaugeDependence_rcpparma_hello_world`)
 }
 
 rcpparma_outerproduct <- function(x) {
-    .Call(`_gaugeDep_rcpparma_outerproduct`, x)
+    .Call(`_gaugeDependence_rcpparma_outerproduct`, x)
 }
 
 rcpparma_innerproduct <- function(x) {
-    .Call(`_gaugeDep_rcpparma_innerproduct`, x)
+    .Call(`_gaugeDependence_rcpparma_innerproduct`, x)
 }
 
 rcpparma_bothproducts <- function(x) {
-    .Call(`_gaugeDep_rcpparma_bothproducts`, x)
-}
-
-rmultinom_1 <- function(arma_probs) {
-    .Call(`_gaugeDep_rmultinom_1`, arma_probs)
+    .Call(`_gaugeDependence_rcpparma_bothproducts`, x)
 }
 
