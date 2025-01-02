@@ -2,16 +2,14 @@
 % Please edit documentation in R/angular_mcmc.R
 \name{angular_mcmc}
 \alias{angular_mcmc}
-\title{Run adaptive MH algorithm for radial-angular parameters}
+\title{Run adaptive MH algorithm for angular parameters}
 \usage{
 angular_mcmc(
   angles,
-  sum_term,
-  sqrt_term,
   dim,
-  starting_theta_ang,
-  ang_gauge_type,
-  prop_Sigma_angles_ = NULL,
+  starting_theta,
+  gauge_type,
+  prop_Sigma_ = NULL,
   n_updates = 10000,
   update_freq = 100,
   n_burnin = 0,
@@ -24,5 +22,5 @@ angular_mcmc(
 )
 }
 \description{
-Run adaptive MH algorithm for radial-angular parameters
+Run adaptive MH algorithm for angular parameters
 }

@@ -11,71 +11,15 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// adaptive_mh_ang_vol
-Rcpp::List adaptive_mh_ang_vol(const arma::vec& angles, const arma::vec& sum_term, const arma::vec& sqrt_term, const int& dim, const double& starting_theta_ang, std::string ang_gauge_type, Rcpp::Nullable<double> prop_Sigma_angles_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDependence_adaptive_mh_ang_vol(SEXP anglesSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_angSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
+// angular_vol_adaptive_mh
+Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles, const arma::mat& grid_x, const int& dim, const arma::rowvec& starting_theta, std::string gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
+RcppExport SEXP _gaugeDependence_angular_vol_adaptive_mh(SEXP anglesSEXP, SEXP grid_xSEXP, SEXP dimSEXP, SEXP starting_thetaSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type sum_term(sum_termSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type sqrt_term(sqrt_termSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type grid_x(grid_xSEXP);
     Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
-    Rcpp::traits::input_parameter< const double& >::type starting_theta_ang(starting_theta_angSEXP);
-    Rcpp::traits::input_parameter< std::string >::type ang_gauge_type(ang_gauge_typeSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<double> >::type prop_Sigma_angles_(prop_Sigma_angles_SEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_updates(n_updatesSEXP);
-    Rcpp::traits::input_parameter< const int& >::type update_freq(update_freqSEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_burnin(n_burninSEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_thin(n_thinSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type adapt_cov(adapt_covSEXP);
-    Rcpp::traits::input_parameter< const double& >::type r_opt(r_optSEXP);
-    Rcpp::traits::input_parameter< const double& >::type c0(c0SEXP);
-    Rcpp::traits::input_parameter< const double& >::type c1(c1SEXP);
-    Rcpp::traits::input_parameter< const int& >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(adaptive_mh_ang_vol(angles, sum_term, sqrt_term, dim, starting_theta_ang, ang_gauge_type, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K));
-    return rcpp_result_gen;
-END_RCPP
-}
-// adaptive_mh_rad_ang_vol
-Rcpp::List adaptive_mh_rad_ang_vol(const arma::vec& radii, const arma::vec& angles, const arma::vec& threshold, const arma::vec& sum_term, const arma::vec& sqrt_term, const int& dim, const arma::rowvec& starting_theta_rad, const double& starting_theta_ang, std::string rad_gauge_type, std::string ang_gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_radii_, Rcpp::Nullable<double> prop_Sigma_angles_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDependence_adaptive_mh_rad_ang_vol(SEXP radiiSEXP, SEXP anglesSEXP, SEXP thresholdSEXP, SEXP sum_termSEXP, SEXP sqrt_termSEXP, SEXP dimSEXP, SEXP starting_theta_radSEXP, SEXP starting_theta_angSEXP, SEXP rad_gauge_typeSEXP, SEXP ang_gauge_typeSEXP, SEXP prop_Sigma_radii_SEXP, SEXP prop_Sigma_angles_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type radii(radiiSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type threshold(thresholdSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type sum_term(sum_termSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type sqrt_term(sqrt_termSEXP);
-    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
-    Rcpp::traits::input_parameter< const arma::rowvec& >::type starting_theta_rad(starting_theta_radSEXP);
-    Rcpp::traits::input_parameter< const double& >::type starting_theta_ang(starting_theta_angSEXP);
-    Rcpp::traits::input_parameter< std::string >::type rad_gauge_type(rad_gauge_typeSEXP);
-    Rcpp::traits::input_parameter< std::string >::type ang_gauge_type(ang_gauge_typeSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type prop_Sigma_radii_(prop_Sigma_radii_SEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<double> >::type prop_Sigma_angles_(prop_Sigma_angles_SEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_updates(n_updatesSEXP);
-    Rcpp::traits::input_parameter< const int& >::type update_freq(update_freqSEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_burnin(n_burninSEXP);
-    Rcpp::traits::input_parameter< const int& >::type n_thin(n_thinSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type adapt_cov(adapt_covSEXP);
-    Rcpp::traits::input_parameter< const double& >::type r_opt(r_optSEXP);
-    Rcpp::traits::input_parameter< const double& >::type c0(c0SEXP);
-    Rcpp::traits::input_parameter< const double& >::type c1(c1SEXP);
-    Rcpp::traits::input_parameter< const int& >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(adaptive_mh_rad_ang_vol(radii, angles, threshold, sum_term, sqrt_term, dim, starting_theta_rad, starting_theta_ang, rad_gauge_type, ang_gauge_type, prop_Sigma_radii_, prop_Sigma_angles_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K));
-    return rcpp_result_gen;
-END_RCPP
-}
-// adaptive_mh
-Rcpp::List adaptive_mh(const arma::vec& radii, const arma::vec& angles, const arma::rowvec& starting_theta, std::string gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
-RcppExport SEXP _gaugeDependence_adaptive_mh(SEXP radiiSEXP, SEXP anglesSEXP, SEXP starting_thetaSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type radii(radiiSEXP);
-    Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
     Rcpp::traits::input_parameter< const arma::rowvec& >::type starting_theta(starting_thetaSEXP);
     Rcpp::traits::input_parameter< std::string >::type gauge_type(gauge_typeSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type prop_Sigma_(prop_Sigma_SEXP);
@@ -88,62 +32,138 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double& >::type c0(c0SEXP);
     Rcpp::traits::input_parameter< const double& >::type c1(c1SEXP);
     Rcpp::traits::input_parameter< const int& >::type K(KSEXP);
-    rcpp_result_gen = Rcpp::wrap(adaptive_mh(radii, angles, starting_theta, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K));
+    rcpp_result_gen = Rcpp::wrap(angular_vol_adaptive_mh(angles, grid_x, dim, starting_theta, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _gaugeDependence_rcpparma_hello_world() {
+// gauss_gauge
+arma::vec gauss_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_gauss_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(gauss_gauge(w1, w2, dep));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _gaugeDependence_rcpparma_outerproduct(SEXP xSEXP) {
+// inv_log_gauge
+arma::vec inv_log_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_inv_log_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(inv_log_gauge(w1, w2, dep));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _gaugeDependence_rcpparma_innerproduct(SEXP xSEXP) {
+// rectangular_gauge
+arma::vec rectangular_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_rectangular_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(rectangular_gauge(w1, w2, dep));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _gaugeDependence_rcpparma_bothproducts(SEXP xSEXP) {
+// logistic_gauge
+arma::vec logistic_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_logistic_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(logistic_gauge(w1, w2, dep));
+    return rcpp_result_gen;
+END_RCPP
+}
+// asym_log_gauge
+arma::vec asym_log_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_asym_log_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(asym_log_gauge(w1, w2, dep));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dirichlet_gauge
+arma::vec dirichlet_gauge(const arma::vec& w1, const arma::vec& w2, const arma::vec& dep);
+RcppExport SEXP _gaugeDependence_dirichlet_gauge(SEXP w1SEXP, SEXP w2SEXP, SEXP depSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type w1(w1SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w2(w2SEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep(depSEXP);
+    rcpp_result_gen = Rcpp::wrap(dirichlet_gauge(w1, w2, dep));
+    return rcpp_result_gen;
+END_RCPP
+}
+// radial_adaptive_mh
+Rcpp::List radial_adaptive_mh(const arma::vec& radii, const arma::vec& r0w, const arma::vec& angles, const arma::rowvec& starting_theta, const std::string& likelihood_type, const std::string& gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
+RcppExport SEXP _gaugeDependence_radial_adaptive_mh(SEXP radiiSEXP, SEXP r0wSEXP, SEXP anglesSEXP, SEXP starting_thetaSEXP, SEXP likelihood_typeSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type radii(radiiSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type r0w(r0wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
+    Rcpp::traits::input_parameter< const arma::rowvec& >::type starting_theta(starting_thetaSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type likelihood_type(likelihood_typeSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type gauge_type(gauge_typeSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type prop_Sigma_(prop_Sigma_SEXP);
+    Rcpp::traits::input_parameter< const int& >::type n_updates(n_updatesSEXP);
+    Rcpp::traits::input_parameter< const int& >::type update_freq(update_freqSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n_burnin(n_burninSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n_thin(n_thinSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type adapt_cov(adapt_covSEXP);
+    Rcpp::traits::input_parameter< const double& >::type r_opt(r_optSEXP);
+    Rcpp::traits::input_parameter< const double& >::type c0(c0SEXP);
+    Rcpp::traits::input_parameter< const double& >::type c1(c1SEXP);
+    Rcpp::traits::input_parameter< const int& >::type K(KSEXP);
+    rcpp_result_gen = Rcpp::wrap(radial_adaptive_mh(radii, r0w, angles, starting_theta, likelihood_type, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K));
+    return rcpp_result_gen;
+END_RCPP
+}
+// est_star_vol
+double est_star_vol(const arma::mat& grid_x, const arma::vec& pars, const std::string& ang_gauge_type);
+RcppExport SEXP _gaugeDependence_est_star_vol(SEXP grid_xSEXP, SEXP parsSEXP, SEXP ang_gauge_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type grid_x(grid_xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type pars(parsSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type ang_gauge_type(ang_gauge_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(est_star_vol(grid_x, pars, ang_gauge_type));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_gaugeDependence_adaptive_mh_ang_vol", (DL_FUNC) &_gaugeDependence_adaptive_mh_ang_vol, 16},
-    {"_gaugeDependence_adaptive_mh_rad_ang_vol", (DL_FUNC) &_gaugeDependence_adaptive_mh_rad_ang_vol, 21},
-    {"_gaugeDependence_adaptive_mh", (DL_FUNC) &_gaugeDependence_adaptive_mh, 14},
-    {"_gaugeDependence_rcpparma_hello_world", (DL_FUNC) &_gaugeDependence_rcpparma_hello_world, 0},
-    {"_gaugeDependence_rcpparma_outerproduct", (DL_FUNC) &_gaugeDependence_rcpparma_outerproduct, 1},
-    {"_gaugeDependence_rcpparma_innerproduct", (DL_FUNC) &_gaugeDependence_rcpparma_innerproduct, 1},
-    {"_gaugeDependence_rcpparma_bothproducts", (DL_FUNC) &_gaugeDependence_rcpparma_bothproducts, 1},
+    {"_gaugeDependence_angular_vol_adaptive_mh", (DL_FUNC) &_gaugeDependence_angular_vol_adaptive_mh, 15},
+    {"_gaugeDependence_gauss_gauge", (DL_FUNC) &_gaugeDependence_gauss_gauge, 3},
+    {"_gaugeDependence_inv_log_gauge", (DL_FUNC) &_gaugeDependence_inv_log_gauge, 3},
+    {"_gaugeDependence_rectangular_gauge", (DL_FUNC) &_gaugeDependence_rectangular_gauge, 3},
+    {"_gaugeDependence_logistic_gauge", (DL_FUNC) &_gaugeDependence_logistic_gauge, 3},
+    {"_gaugeDependence_asym_log_gauge", (DL_FUNC) &_gaugeDependence_asym_log_gauge, 3},
+    {"_gaugeDependence_dirichlet_gauge", (DL_FUNC) &_gaugeDependence_dirichlet_gauge, 3},
+    {"_gaugeDependence_radial_adaptive_mh", (DL_FUNC) &_gaugeDependence_radial_adaptive_mh, 16},
+    {"_gaugeDependence_est_star_vol", (DL_FUNC) &_gaugeDependence_est_star_vol, 3},
     {NULL, NULL, 0}
 };
 

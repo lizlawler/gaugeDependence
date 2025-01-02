@@ -1,50 +1,62 @@
 #include "loglik.h"
-#include "helpers.h"
+#include "star_vol.h"
 #include "gauge_functions.h"
 #include <RcppArmadillo.h>
 
-// Angular loglikelihood
-double angular_loglik(arma::vec const& W, double const& pars, 
-                      arma::vec const& sum_term, arma::vec const& sqrt_term, int const& dim,
+// Angular likelihood
+double angular_loglik(const arma::vec& w1, const arma::vec& dep_par, 
+                      const arma::mat& grid_x, const int& dim,
                       const std::string& ang_gauge_type) {
-  gauge_function ang_dens_fn = get_gauge_function(ang_gauge_type);
-  int N = W.size();
-  double L_volume = (ang_dens_fn == &logistic_gauge) ? pars : est_vol(sum_term, sqrt_term, pars);
-  return(-(double)dim * sum(log(ang_dens_fn(W, pars))) - (double)N * (log((double)dim) + log(L_volume)));
+  gauge_function ang_dens_gauge_fn = get_gauge_function(ang_gauge_type);
+  int N = w1.size();
+  const arma::vec& w2 = 1 - w1;
+  double L_volume = (ang_dens_gauge_fn == &logistic_gauge) ? dep_par(0) : est_star_vol(grid_x, dep_par, ang_gauge_type);
+  return(-(double)dim * sum(log(ang_dens_gauge_fn(w1, w2, dep_par))) - (double)N * (log((double)dim) + log(L_volume)));
 }
 
-// Radial censored loglikelihood
-double radial_cens_loglik(arma::vec const& R, arma::vec const& pars, 
-                          arma::vec const& threshold, arma::vec const& W,
+// Radial censored likelihood
+double radial_cens_loglik(const arma::vec& r, const arma::vec& r0w, const arma::vec& w1,
+                          const double& alpha, const arma::vec& dep_par,
                           const std::string& rad_gauge_type) {
-  gauge_function rad_dens_fn = get_gauge_function(rad_gauge_type);
-  int n = R.size();
-  double alpha = pars(0);
-  double dep = pars(1);
-  arma::vec beta = rad_dens_fn(W, dep);
+  gauge_function gauge_fn = get_gauge_function(rad_gauge_type);
+  const int& N = r.size();
+  const arma::vec& w2 = 1 - w1;
+  arma::vec beta = gauge_fn(w1, w2, dep_par);
   double loglik = 0.0;
-  for(int i = 0; i < n; i ++) {
-    if(R(i) < threshold(i)) {
-      loglik += R::pgamma(threshold(i), alpha, 1/beta(i), true, true);
-    } else {
-      loglik += R::dgamma(R(i), alpha, 1/beta(i), true);
-    }
+  for(int i = 0; i < N; i ++) {
+    double scale_temp = 1 / beta(i);
+    if(r(i) < r0w(i)) {
+      loglik += R::pgamma(r0w(i), alpha, scale_temp, true, true);
+    } else { 
+      loglik += R::dgamma(r(i), alpha, scale_temp, true);
+    } 
   }
   return(loglik);
-} 
+}  
 
-// Radial top 5% loglikelihood; excluding normalizing constant
-double radial_top5_loglik(arma::vec const& R, arma::vec const& pars, 
-                          arma::vec const& W,
-                          const std::string& gauge_type) {
-  gauge_function dens_fn = get_gauge_function(gauge_type);
-  int n = R.size();
-  double alpha = pars(0);
-  double dep = pars(1);
-  arma::vec beta = dens_fn(W, dep);
+// Radial truncated likelihood, appropriately renormalized
+double radial_trunc_loglik(const arma::vec& r, const arma::vec& r0w, const arma::vec& w1,
+                           const double& alpha, const arma::vec& dep_par,
+                           const std::string& rad_gauge_type) {
+  gauge_function gauge_fn = get_gauge_function(rad_gauge_type);
+  const int& N = r.size();
+  const arma::vec& w2 = 1 - w1;
+  arma::vec beta = gauge_fn(w1, w2, dep_par);
   double loglik = 0.0;
-  for(int i = 0; i < n; i ++) {
-      loglik += R::dgamma(R(i), alpha, 1/beta(i), true);
+  for(int i = 0; i < N; i ++) {
+    double scale_temp = 1 / beta(i);
+    loglik += R::dgamma(r(i), alpha, scale_temp, true) - R::pgamma(r0w(i), alpha, scale_temp, false, true);
   }
   return(loglik);
+}
+
+// Function to map strings to loglikelihood functions
+radial_loglik_fn get_loglik_function(const std::string& type_str) {
+  if (type_str == "cens") {
+    return &radial_cens_loglik;
+  } else if (type_str == "trunc") {
+    return &radial_trunc_loglik;
+  } else {
+    Rcpp::stop("Unknown likelihood: " + type_str);
+  }
 }

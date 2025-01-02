@@ -8,21 +8,24 @@
 using namespace arma;
 
 // [[Rcpp::export]]
-Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
-                                   const arma::mat& grid_x, const int& dim,
-                                   const arma::rowvec& starting_theta,
-                                   std::string gauge_type,
-                                   Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_ = R_NilValue,
-                                   const int& n_updates = 10000, const int& update_freq = 100,
-                                   const int& n_burnin = 0, const int& n_thin = 1,
-                                   const bool& adapt_cov = false,
-                                   const double& r_opt = 0.234, 
-                                   const double& c0 = 10, const double& c1 = 0.8, 
-                                   const int& K = 10) {
+Rcpp::List radial_adaptive_mh(const arma::vec& radii, const arma::vec& r0w, const arma::vec& angles, 
+                              const arma::rowvec& starting_theta,
+                              const std::string& likelihood_type,
+                              const std::string& gauge_type,
+                              Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_ = R_NilValue,
+                              const int& n_updates = 10000, const int& update_freq = 100,
+                              const int& n_burnin = 0, const int& n_thin = 1,
+                              const bool& adapt_cov = false,
+                              const double& r_opt = 0.234, 
+                              const double& c0 = 10, const double& c1 = 0.8, 
+                              const int& K = 10) {
+  
+  // Grab appropriate log likelihood function
+  radial_loglik_fn loglik_fn = get_loglik_function(likelihood_type);
   
   double eps = 0.001;
   int k = 3, // iteration offest
-    p = starting_theta.size(); // accounting for more than one parameter in dirichlet case
+    p = starting_theta.size();
   
   // Initialize sigma_m to rule of thumb
   double sigma_m = pow(2.4 / (double)p, 2);
@@ -38,7 +41,7 @@ Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
   } else {
     Rcpp::Rcout << "Proposal matrix for radial parameters not provided, using identity matrix." << std::endl;
     prop_Sigma = eye(p, p);  // Use identity matrix
-  }  
+  } 
   
   // Initialize cholesky decomp of proposal covariance matrix
   mat prop_C = chol(prop_Sigma);
@@ -52,22 +55,20 @@ Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
   
   // Initialize MH
   vec theta = starting_theta.t();
-  double prior = prior_fn_angles(theta);
-  double likelihood = angular_loglik(angles, 
-                                     theta, 
-                                     grid_x, dim, 
-                                     gauge_type);
+  double prior = prior_fn_radii(theta);
+  double likelihood = loglik_fn(radii, r0w, angles,
+                                theta(0), theta.subvec(1, theta.n_elem - 1), 
+                                gauge_type);
   
   // Main loop of MH
   for(int iter = 1; iter < n_updates; ++iter) {
     // Radial update
     vec theta_star = theta + sigma_m * (randn<rowvec>(p) * prop_C).t();
-    double prior_star = prior_fn_angles(theta_star);
+    double prior_star = prior_fn_radii(theta_star);
     if(prior_star != -datum::inf) {
-      double likelihood_star = angular_loglik(angles, 
-                                              theta_star, 
-                                              grid_x, dim, 
-                                              gauge_type);
+      double likelihood_star = loglik_fn(radii, r0w, angles,
+                                         theta_star(0), theta_star.subvec(1, theta_star.n_elem - 1),
+                                         gauge_type);
       if ((prior_star + likelihood_star - prior - likelihood) > log(randu())) {
         theta = theta_star;
         prior = prior_star;
@@ -130,13 +131,14 @@ Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
   
   // Fill the matrix with data from each trace
   result_matrix.col(0) = trace.submat(thinning_idx, uvec{0});  
-  if(p > 1) { // account for Dirichlet scenario
-    result_matrix.col(1) = trace.submat(thinning_idx, uvec{1});
-    result_matrix.col(2) = sigma_m_trace.elem(thinning_idx); 
-    col_names = {"theta1", "theta2", "sigma_m"};
+  result_matrix.col(1) = trace.submat(thinning_idx, uvec{1});
+  if(p > 2) { // account for Dirichlet scenario
+    result_matrix.col(2) = trace.submat(thinning_idx, uvec{2});
+    result_matrix.col(3) = sigma_m_trace.elem(thinning_idx); 
+    col_names = {"alpha", "theta1", "theta2", "sigma_m"};
   } else {
-    result_matrix.col(1) = sigma_m_trace.elem(thinning_idx); 
-    col_names = {"dep", "sigma_m"};
+    result_matrix.col(2) = sigma_m_trace.elem(thinning_idx); 
+    col_names = {"alpha", "dep", "sigma_m"};
   }
   
   // Convert arma::mat to Rcpp::NumericMatrix for column name assignment
@@ -150,4 +152,29 @@ Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
     Rcpp::Named("samples") = r_result_matrix,
     Rcpp::Named("acc_prob") = mean(jump_trace)
   );
-}
+} 
+
+/*** R
+# # data <- RcppSimdJson::fload("../gaugeDep/data/gauss/high_100.json")
+# w <- data$W
+# r <- data$R
+# r0w <- data$r0_w
+# idx <- data$idx
+# trunc_results <- radial_adaptive_mh(radii = r[idx], r0w = r0w[idx], angles = w[idx],
+#                               starting_theta = c(rgamma(1, 4, 2), runif(1)),
+#                               # starting_theta = c(rgamma(1, 4, 2), abs(rt(1, 4,ncp = 0)), abs(rt(1, 4,ncp = 0))),
+#                               likelihood_type = "trunc",
+#                               gauge_type = "gauss",
+#                               n_updates = 15000, update_freq = 250,adapt_cov = TRUE)
+# # 
+# cens_results <- radial_adaptive_mh(radii = r, r0w = r0w, angles = w,
+#                                     starting_theta = c(rgamma(1, 4, 2), runif(1)),
+#                                     likelihood_type = "cens",
+#                                     gauge_type = "gauss",
+#                                     n_updates = 15000, update_freq = 250,adapt_cov = TRUE)
+# # # 
+# plot(trunc_results$samples[,"dep"], type = "l")
+# plot(density(trunc_results$samples[,"dep"]))
+# plot(cens_results$samples[,"dep"], type = "l")
+# plot(density(cens_results$samples[,"dep"]))
+*/
