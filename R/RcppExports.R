@@ -29,6 +29,14 @@ dirichlet_gauge <- function(w1, w2, dep) {
     .Call(`_gaugeDependence_dirichlet_gauge`, w1, w2, dep)
 }
 
+calc_loglik_angular <- function(angles, grid_x, dim, posterior_params, gauge_type) {
+    .Call(`_gaugeDependence_calc_loglik_angular`, angles, grid_x, dim, posterior_params, gauge_type)
+}
+
+calc_loglik_radial <- function(radii, r0w, angles, posterior_params, likelihood_type, gauge_type) {
+    .Call(`_gaugeDependence_calc_loglik_radial`, radii, r0w, angles, posterior_params, likelihood_type, gauge_type)
+}
+
 radial_adaptive_mh <- function(radii, r0w, angles, starting_theta, likelihood_type, gauge_type, prop_Sigma_ = NULL, n_updates = 10000L, update_freq = 100L, n_burnin = 0L, n_thin = 1L, adapt_cov = FALSE, r_opt = 0.234, c0 = 10, c1 = 0.8, K = 10L) {
     .Call(`_gaugeDependence_radial_adaptive_mh`, radii, r0w, angles, starting_theta, likelihood_type, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
 }

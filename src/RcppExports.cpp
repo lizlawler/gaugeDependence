@@ -114,6 +114,37 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calc_loglik_angular
+arma::mat calc_loglik_angular(const arma::vec& angles, const arma::mat& grid_x, const int& dim, const arma::mat& posterior_params, const std::string& gauge_type);
+RcppExport SEXP _gaugeDependence_calc_loglik_angular(SEXP anglesSEXP, SEXP grid_xSEXP, SEXP dimSEXP, SEXP posterior_paramsSEXP, SEXP gauge_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type grid_x(grid_xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type posterior_params(posterior_paramsSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type gauge_type(gauge_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(calc_loglik_angular(angles, grid_x, dim, posterior_params, gauge_type));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calc_loglik_radial
+arma::mat calc_loglik_radial(const arma::vec& radii, const arma::vec& r0w, const arma::vec& angles, const arma::mat& posterior_params, const std::string& likelihood_type, const std::string& gauge_type);
+RcppExport SEXP _gaugeDependence_calc_loglik_radial(SEXP radiiSEXP, SEXP r0wSEXP, SEXP anglesSEXP, SEXP posterior_paramsSEXP, SEXP likelihood_typeSEXP, SEXP gauge_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type radii(radiiSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type r0w(r0wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type angles(anglesSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type posterior_params(posterior_paramsSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type likelihood_type(likelihood_typeSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type gauge_type(gauge_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(calc_loglik_radial(radii, r0w, angles, posterior_params, likelihood_type, gauge_type));
+    return rcpp_result_gen;
+END_RCPP
+}
 // radial_adaptive_mh
 Rcpp::List radial_adaptive_mh(const arma::vec& radii, const arma::vec& r0w, const arma::vec& angles, const arma::rowvec& starting_theta, const std::string& likelihood_type, const std::string& gauge_type, Rcpp::Nullable<Rcpp::NumericMatrix> prop_Sigma_, const int& n_updates, const int& update_freq, const int& n_burnin, const int& n_thin, const bool& adapt_cov, const double& r_opt, const double& c0, const double& c1, const int& K);
 RcppExport SEXP _gaugeDependence_radial_adaptive_mh(SEXP radiiSEXP, SEXP r0wSEXP, SEXP anglesSEXP, SEXP starting_thetaSEXP, SEXP likelihood_typeSEXP, SEXP gauge_typeSEXP, SEXP prop_Sigma_SEXP, SEXP n_updatesSEXP, SEXP update_freqSEXP, SEXP n_burninSEXP, SEXP n_thinSEXP, SEXP adapt_covSEXP, SEXP r_optSEXP, SEXP c0SEXP, SEXP c1SEXP, SEXP KSEXP) {
@@ -162,6 +193,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_gaugeDependence_logistic_gauge", (DL_FUNC) &_gaugeDependence_logistic_gauge, 3},
     {"_gaugeDependence_asym_log_gauge", (DL_FUNC) &_gaugeDependence_asym_log_gauge, 3},
     {"_gaugeDependence_dirichlet_gauge", (DL_FUNC) &_gaugeDependence_dirichlet_gauge, 3},
+    {"_gaugeDependence_calc_loglik_angular", (DL_FUNC) &_gaugeDependence_calc_loglik_angular, 5},
+    {"_gaugeDependence_calc_loglik_radial", (DL_FUNC) &_gaugeDependence_calc_loglik_radial, 6},
     {"_gaugeDependence_radial_adaptive_mh", (DL_FUNC) &_gaugeDependence_radial_adaptive_mh, 16},
     {"_gaugeDependence_est_star_vol", (DL_FUNC) &_gaugeDependence_est_star_vol, 3},
     {NULL, NULL, 0}
