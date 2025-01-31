@@ -11,7 +11,12 @@ double angular_loglik(const arma::vec& w1, const arma::vec& dep_par,
   int N = w1.size();
   const arma::vec& w2 = 1 - w1;
   double L_volume = (ang_dens_gauge_fn == &logistic_gauge) ? dep_par(0) : est_star_vol(grid_x, dep_par, ang_gauge_type);
-  return(-(double)dim * sum(log(ang_dens_gauge_fn(w1, w2, dep_par))) - (double)N * (log((double)dim) + log(L_volume)));
+  double total_loglik = -(double)dim * sum(log(ang_dens_gauge_fn(w1, w2, dep_par))) - (double)N * (log((double)dim) + log(L_volume));
+  if(total_loglik == arma::datum::inf) {
+    return -arma::datum::inf;
+  } else {
+    return total_loglik;
+  }
 }
 
 // Radial censored likelihood
