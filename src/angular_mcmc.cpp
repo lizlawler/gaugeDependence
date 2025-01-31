@@ -36,7 +36,7 @@ Rcpp::List angular_vol_adaptive_mh(const arma::vec& angles,
       prop_Sigma = arma::eye(p, p);  // Use identity matrix
     }
   } else {
-    Rcpp::Rcout << "Proposal matrix for radial parameters not provided, using identity matrix." << std::endl;
+    Rcpp::Rcout << "Proposal matrix for angular parameter(s) not provided, using identity matrix." << std::endl;
     prop_Sigma = eye(p, p);  // Use identity matrix
   }  
   
