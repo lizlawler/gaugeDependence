@@ -48,7 +48,6 @@ arma::vec radial_trunc_lpdf(const arma::vec& r, const arma::vec& r0w, const arma
   arma::vec pw_loglik(N);
   const arma::vec& w2 = 1 - w1;
   arma::vec beta = gauge_fn(w1, w2, dep_par);
-  double loglik = 0.0;
   for(int i = 0; i < N; i ++) {
     double scale_temp = 1 / beta(i);
     pw_loglik(i) = R::dgamma(r(i), alpha, scale_temp, true) - R::pgamma(r0w(i), alpha, scale_temp, false, true);

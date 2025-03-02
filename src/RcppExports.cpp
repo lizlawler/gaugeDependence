@@ -171,6 +171,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// reject_samp
+arma::vec reject_samp(const int& n, const arma::vec& dep_par, const arma::mat& grid_x, const int& dim, const std::string& ang_gauge_type);
+RcppExport SEXP _gaugeDependence_reject_samp(SEXP nSEXP, SEXP dep_parSEXP, SEXP grid_xSEXP, SEXP dimSEXP, SEXP ang_gauge_typeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type dep_par(dep_parSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type grid_x(grid_xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type ang_gauge_type(ang_gauge_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(reject_samp(n, dep_par, grid_x, dim, ang_gauge_type));
+    return rcpp_result_gen;
+END_RCPP
+}
 // est_star_vol
 double est_star_vol(const arma::mat& grid_x, const arma::vec& pars, const std::string& ang_gauge_type);
 RcppExport SEXP _gaugeDependence_est_star_vol(SEXP grid_xSEXP, SEXP parsSEXP, SEXP ang_gauge_typeSEXP) {
@@ -196,6 +211,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_gaugeDependence_calc_loglik_angular", (DL_FUNC) &_gaugeDependence_calc_loglik_angular, 5},
     {"_gaugeDependence_calc_loglik_radial", (DL_FUNC) &_gaugeDependence_calc_loglik_radial, 6},
     {"_gaugeDependence_radial_adaptive_mh", (DL_FUNC) &_gaugeDependence_radial_adaptive_mh, 16},
+    {"_gaugeDependence_reject_samp", (DL_FUNC) &_gaugeDependence_reject_samp, 5},
     {"_gaugeDependence_est_star_vol", (DL_FUNC) &_gaugeDependence_est_star_vol, 3},
     {NULL, NULL, 0}
 };

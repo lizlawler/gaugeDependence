@@ -23,7 +23,7 @@ arma::vec rectangular_gauge(const arma::vec& w1, const arma::vec& w2, const arma
   arma::mat w_max(w1.size(), 3);
   w_max.col(0) = (w1 - w2) / dep_value;
   w_max.col(1) = (w2 - w1) / dep_value;
-  w_max.col(2).fill(1 / (2 - dep_value));
+  w_max.col(2) = ((w1 + w2) / (2 - dep_value));
   return max(w_max, 1);
 }
 
@@ -42,8 +42,7 @@ arma::vec asym_log_gauge(const arma::vec& w1, const arma::vec& w2, const arma::v
   arma::mat w1_and_2(w1.size(), 2);
   w1_and_2.col(0) = w1;
   w1_and_2.col(1) = w2;
-  arma::vec ones_vec = arma::ones(w1.size());
-  return min(ones_vec, r_inv * max(w1_and_2, 1) + (1 - r_inv) * min(w1_and_2, 1));
+  return min(w1 + w2, (r_inv * max(w1_and_2, 1) + (1 - r_inv) * min(w1_and_2, 1)));
 }
 
 // [[Rcpp::export]]
@@ -52,7 +51,7 @@ arma::vec dirichlet_gauge(const arma::vec& w1, const arma::vec& w2, const arma::
   arma::mat w1_and_2(w1.size(), 2);
   w1_and_2.col(0) = w1;
   w1_and_2.col(1) = w2;
-  return (1 + theta1 + theta2) * max(w1_and_2, 1) - (theta1 * w1 + theta2 * w2);
+  return (1 + theta1 + theta2) * max(w1_and_2, 1) - (theta1 * w1 + theta2 * w2);  
 }
 
 // Function to map strings to gauge functions
@@ -76,6 +75,6 @@ gauge_function get_gauge_function(const std::string& type_str) {
 
 /*** R
 # w <- seq(0, 1, length.out = 200)
-# gw <- logistic_gauge(w, 0.5)
+# gw <- rectangular_gauge(w, 1-w, 0.5)
 # plot(w/gw, (1-w)/gw)
 */

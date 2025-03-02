@@ -41,6 +41,10 @@ radial_adaptive_mh <- function(radii, r0w, angles, starting_theta, likelihood_ty
     .Call(`_gaugeDependence_radial_adaptive_mh`, radii, r0w, angles, starting_theta, likelihood_type, gauge_type, prop_Sigma_, n_updates, update_freq, n_burnin, n_thin, adapt_cov, r_opt, c0, c1, K)
 }
 
+reject_samp <- function(n, dep_par, grid_x, dim, ang_gauge_type) {
+    .Call(`_gaugeDependence_reject_samp`, n, dep_par, grid_x, dim, ang_gauge_type)
+}
+
 est_star_vol <- function(grid_x, pars, ang_gauge_type) {
     .Call(`_gaugeDependence_est_star_vol`, grid_x, pars, ang_gauge_type)
 }

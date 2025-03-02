@@ -12,7 +12,7 @@ double est_star_vol(const arma::mat& grid_x,
 }
 
 /*** R
-x1 <- seq(0, 1, length.out = 100)
-grid <- as.matrix(expand.grid(x1, x1))
-est_star_vol(grid, 0.5, "logistic")
+# x1 <- seq(0, 1, length.out = 200)
+# grid <- as.matrix(expand.grid(x1, x1))
+# est_star_vol(grid, 0.2, "rectangular")
 */
