@@ -1,3 +1,20 @@
+// =============================================================================
+// angular_mcmc.cpp
+//
+// Adaptive Metropolis-Hastings MCMC sampler for the star-shaped angular
+// density parameters. Exported to R as angular_vol_adaptive_mh(), called by
+// the R wrapper angular_mcmc().
+//
+// The sampler targets the posterior:
+//   pi(theta | W) proportional to f_W(W; theta) * pi(theta)
+// where f_W is the star-shaped angular density and pi is the prior from
+// priors.cpp. The proposal covariance is adapted using the Haario et al.
+// (2001) stochastic approximation scheme, with the Roberts & Rosenthal (2009)
+// scaling rule (target acceptance rate r_opt = 0.234).
+//
+// Returns a list with the MCMC trace matrix (post-burnin, thinned) and the
+// overall acceptance rate.
+// =============================================================================
 #include "gauge_functions.h"
 #include "star_vol.h"
 #include "loglik.h"

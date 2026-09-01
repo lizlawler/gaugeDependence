@@ -2,7 +2,7 @@
 % Please edit documentation in R/angular_mcmc.R
 \name{angular_mcmc}
 \alias{angular_mcmc}
-\title{Run adaptive MH algorithm for angular parameters}
+\title{Run adaptive Metropolis-Hastings MCMC for angular dependence parameters}
 \usage{
 angular_mcmc(
   angles,
@@ -21,6 +21,83 @@ angular_mcmc(
   K = 10
 )
 }
+\arguments{
+\item{angles}{Numeric vector of observed angles W in (0, 1).}
+
+\item{dim}{Integer. Dimension of the data (currently only dim = 2 is supported).}
+
+\item{starting_theta}{Numeric vector of initial parameter values. Length 1
+for all gauge types except \code{"dirichlet"}, which requires length 2
+(theta1, theta2).}
+
+\item{gauge_type}{Character string specifying the gauge function family.
+One of \code{"gauss"}, \code{"logistic"}, \code{"inv_log"},
+\code{"asym_log"}, \code{"dirichlet"}, \code{"rectangular"}.}
+
+\item{prop_Sigma_}{Optional numeric matrix. Initial proposal covariance
+matrix for the MH step. Defaults to an identity matrix if not provided or
+invalid.}
+
+\item{n_updates}{Integer. Total number of MCMC iterations (default 10000).}
+
+\item{update_freq}{Integer. Frequency at which progress is reported to the
+console (default 100).}
+
+\item{n_burnin}{Integer. Number of iterations to discard as burn-in
+(default 0).}
+
+\item{n_thin}{Integer. Thinning interval; every \code{n_thin}-th post-burnin
+sample is retained (default 1).}
+
+\item{adapt_cov}{Logical. If TRUE, the proposal covariance matrix is
+updated adaptively during sampling (default FALSE).}
+
+\item{r_opt}{Numeric. Target acceptance rate for the adaptive scaling step
+(default 0.234, the optimal rate for a single-parameter Gaussian target).}
+
+\item{c0}{Numeric. Adaptation rate constant controlling the speed of
+sigma_m adaptation (default 10).}
+
+\item{c1}{Numeric. Adaptation decay exponent in (0.5, 1]; controls how
+quickly the adaptation rate decreases (default 0.8).}
+
+\item{K}{Integer. Number of iterations between each adaptive update step
+(default 10).}
+}
+\value{
+A named list with elements:
+  \describe{
+    \item{samples}{Numeric matrix of post-burnin, thinned MCMC samples.
+      Columns are named \code{"dep"} and \code{"sigma_m"} for single-parameter
+      gauges, or \code{"theta1"}, \code{"theta2"}, and \code{"sigma_m"} for
+      the Dirichlet gauge. \code{sigma_m} is the adaptive proposal scale.}
+    \item{acc_prob}{Numeric scalar. Overall acceptance rate of the sampler.}
+  }
+}
 \description{
-Run adaptive MH algorithm for angular parameters
+Fits the star-shaped angular density model by running an adaptive MH sampler
+for the gauge function dependence parameter(s). The angular log-likelihood is
+evaluated on a 100 x 100 grid over [0,1]^2 used to estimate the star-body
+volume via Monte Carlo.
+}
+\examples{
+\dontrun{
+data <- RcppSimdJson::fload("data/gauss/high_1.json")
+fit <- angular_mcmc(
+  angles        = data$W,
+  dim           = 2,
+  starting_theta = 0.5,
+  gauge_type    = "gauss",
+  n_updates     = 15000,
+  update_freq   = 250,
+  n_burnin      = 5000,
+  n_thin        = 5,
+  adapt_cov     = TRUE
+)
+plot(fit$samples[, "dep"], type = "l", ylab = "dep", main = "Traceplot")
+}
+
+}
+\seealso{
+\code{\link{radial_mcmc}}, \code{\link{angular_loglik}}
 }

@@ -1,3 +1,22 @@
+// =============================================================================
+// radial_mcmc.cpp
+//
+// Adaptive Metropolis-Hastings MCMC sampler for the gauge-function radial
+// model parameters (alpha, dep). Exported to R as radial_adaptive_mh(),
+// called by the R wrapper radial_mcmc().
+//
+// The sampler targets the posterior:
+//   pi(alpha, dep | R, W) proportional to L(R, W; alpha, dep) * pi(alpha, dep)
+// where L is either the censored or truncated Gamma likelihood (selected by
+// likelihood_type) and pi is the prior from priors.cpp. Uses the same
+// Haario et al. (2001) / Roberts & Rosenthal (2009) adaptive scheme as the
+// angular sampler in angular_mcmc.cpp.
+//
+// Output column names:
+//   Non-Dirichlet gauges: "alpha", "dep", "sigma_m"
+//   Dirichlet gauge:      "alpha", "theta1", "theta2", "sigma_m"
+// where sigma_m is the adaptive proposal scale (for diagnostics).
+// =============================================================================
 #include "gauge_functions.h"
 #include "star_vol.h"
 #include "loglik.h"

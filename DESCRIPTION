@@ -1,13 +1,27 @@
 Package: gaugeDependence
 Type: Package
-Title: Concise Summary of What the Package Does
-Version: 1.0
-Date: 2024-09-30
-Authors@R: person("Your", "Name", role = c("aut", "cre"), email = "your@email.com")
-Description: More about what it does (maybe more than one line).
-License: GPL (>= 2)
-Suggests: tinytest
+Title: Bayesian MCMC for Bivariate Extremes via Gauge Functions
+Version: 1.0.0
+Date: 2026-06-30
+Authors@R: person("Elizabeth", "Lawler", role = c("aut", "cre"),
+                  email = "eslawler@gmail.com",
+                  comment = c(ORCID = "0009-0004-4491-4733"))
+Description: Provides adaptive Metropolis-Hastings MCMC samplers for fitting
+    bivariate extreme value models within a geometric framework.
+    The joint distribution of a bivariate extreme is decomposed into radial (R) 
+    and angular (W) components: radii above a threshold are modelled as
+    Gamma(2, g(W)), where g is a gauge function; angles are modelled via a
+    star-shaped angular density. Six parametric gauge families are implemented
+    (Gaussian, logistic, inverse logistic, asymmetric logistic, Dirichlet,
+    rectangular), with both truncated and censored likelihood options for the
+    radial component. Posterior pointwise log-likelihoods are computed for
+    downstream Bayesian model averaging via the loo package. Core samplers and
+    gauge functions are implemented in C++ via Rcpp and RcppArmadillo.
+License: MIT + file LICENSE
+Suggests: 
+    testthat (>= 3.0.0)
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: Rcpp (>= 1.0.13)
 LinkingTo: Rcpp, RcppArmadillo
+Config/testthat/edition: 3

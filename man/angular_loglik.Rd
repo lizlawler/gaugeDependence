@@ -2,10 +2,50 @@
 % Please edit documentation in R/angular_loglik.R
 \name{angular_loglik}
 \alias{angular_loglik}
-\title{Run adaptive MH algorithm for angular parameters}
+\title{Compute posterior pointwise log-likelihood for the angular density}
 \usage{
 angular_loglik(angles, dim, posterior_params, gauge_type)
 }
+\arguments{
+\item{angles}{Numeric vector of observed angles W in (0, 1).}
+
+\item{dim}{Integer. Dimension of the data (currently only dim = 2 supported).}
+
+\item{posterior_params}{Numeric matrix of posterior MCMC samples,
+with one row per iteration. For single-parameter gauges, pass a single-column
+matrix of the dependence parameter; for the Dirichlet gauge, pass a
+two-column matrix (theta1, theta2). The \code{sigma_m} column from
+\code{angular_mcmc()} output should be dropped before passing.}
+
+\item{gauge_type}{Character string specifying the gauge function family.
+One of \code{"gauss"}, \code{"logistic"}, \code{"inv_log"},
+\code{"asym_log"}, \code{"dirichlet"}, \code{"rectangular"}.}
+}
+\value{
+Numeric matrix of dimension (n_iter x n_obs) containing the
+  pointwise log-likelihood at each observation for each MCMC iteration.
+}
 \description{
-Run adaptive MH algorithm for angular parameters
+For each row of \code{posterior_params} (one MCMC iteration), evaluates the
+star-shaped angular log-density at all observed angles. Returns an
+(n_iter x n_obs) matrix of pointwise log-likelihoods for use with
+\code{loo::loo()} or \code{loo::stacking_weights()}.
+}
+\examples{
+\dontrun{
+data   <- RcppSimdJson::fload("data/gauss/high_1.json")
+fit    <- angular_mcmc(angles = data$W, dim = 2,
+                       starting_theta = 0.5, gauge_type = "gauss",
+                       n_updates = 15000, n_burnin = 5000, n_thin = 5)
+# Drop the sigma_m column before computing log-likelihoods
+params  <- fit$samples[, "dep", drop = FALSE]
+pw_loglik <- angular_loglik(angles = data$W, dim = 2,
+                            posterior_params = params,
+                            gauge_type = "gauss")
+loo_result <- loo::loo(pw_loglik)
+}
+
+}
+\seealso{
+\code{\link{angular_mcmc}}, \code{\link{radial_loglik}}
 }
