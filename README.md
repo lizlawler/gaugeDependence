@@ -1,14 +1,14 @@
 # gaugeDependence
 
-An R package providing Bayesian MCMC samplers for modelling bivariate extremes 
-using gauge function dependence structures. The core samplers and gauge functions 
+An R package providing Bayesian MCMC samplers for modeling bivariate extremes 
+through a geometric framework. The core samplers and gauge functions 
 are implemented in C++ via Rcpp and RcppArmadillo for performance.
 
 ## Background
 
-The package implements the gauge-function bivariate extremes framework. A bivariate 
-observation (X1, X2) with standard exponential margins is decomposed into a radial 
-component R = X1 + X2 and an angular component W = X1 / R. Above a threshold 
+The package implements a limit-set representation of the bivariate extremes framework. 
+A bivariate observation (X1, X2) with standard exponential margins is decomposed into 
+a radial component R = X1 + X2 and an angular component W = X1 / R. Above a threshold 
 r0(W), the radial component is modelled as:
 
 ```
@@ -40,12 +40,12 @@ Six parametric gauge functions are implemented:
 
 | Name | `gauge_type` | Parameter | Dependence class |
 |------|-------------|-----------|-----------------|
-| Gaussian | `"gauss"` | rho in (0, 1) | Asymptotic independence |
-| Logistic | `"logistic"` | dep in (0, 1] | Asymptotic dependence |
-| Inverted logistic | `"inv_log"` | dep in (0, 1] | Asymptotic dependence |
-| Asymmetric logistic | `"asym_log"` | dep in (0, 1] | Asymptotic dependence |
-| Rectangular | `"rectangular"` | dep in (0, 1] | Asymptotic dependence |
-| Dirichlet | `"dirichlet"` | c(theta1, theta2) > 0 | Asymptotic dependence |
+| Gaussian | `"gauss"` | rho in (0, 1) | Asymptotic independence (AI) |
+| Logistic | `"logistic"` | dep in (0, 1] | Asymptotic dependence (AD) |
+| Inverted logistic | `"inv_log"` | dep in (0, 1] | AI |
+| Asymmetric logistic | `"asym_log"` | dep in (0, 1] | AD |
+| Rectangular | `"rectangular"` | dep in (0, 1] | AI |
+| Dirichlet | `"dirichlet"` | c(theta1, theta2) > 0 | AD |
 
 All six gauge functions are exported to R and can be evaluated directly:
 
@@ -146,7 +146,12 @@ The radial model supports two likelihoods:
 
 If you use this package, please cite the associated manuscript:
 
-> Lawler, E. [et al.] [Title TBD]. *[Journal TBD]*, [Year].
+> E. Lawler and B. Shaby (2026). *Bayesian model averaging of risk set probabilities
+> using a geometric representation of multivariate extremes*.
+> arXiv:2608.28888. https://arxiv.org/abs/2608.28888
+
+The manuscript is currently under review; this citation will be updated
+if and when it is published.
 
 ## License
 
